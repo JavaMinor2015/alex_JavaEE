@@ -5,15 +5,21 @@ import JavaEE7.CurrencyConverter.domain.Currency;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.ejb.Startup;
+import javax.inject.Singleton;
 
 /**
  * Created by alex on 10/26/15.
  */
+@Singleton
 @Startup
 public class Initializer {
 
-    // TODO no worky, make worky
+    @EJB
+    private CurrencyRepository repository;
+
+    // TODO still no worky, make worky
 
     @PostConstruct
     private void startup() {

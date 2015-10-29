@@ -3,12 +3,15 @@ package JavaEE7.CurrencyConverter.logic;
 import JavaEE7.CurrencyConverter.CurrencyRepository;
 import JavaEE7.CurrencyConverter.domain.Currency;
 
+import javax.enterprise.context.Dependent;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by alex on 10/27/15.
  */
-public class LineParser {
+@Dependent
+public class LineParser implements Serializable {
 
     public void parse(final List<String> lines) {
         for (String line : lines) {

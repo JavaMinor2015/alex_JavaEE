@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.IOException;
@@ -24,6 +25,9 @@ import java.util.Scanner;
 @SessionScoped
 public class Uploader implements Serializable {
 
+    @Inject
+    private LineParser parser;
+
     private static final Logger LOGGER = LogManager.getLogger(Uploader.class.getName());
 
     @Getter
@@ -39,7 +43,7 @@ public class Uploader implements Serializable {
                 while (scanner.hasNext()) {
                     lines.add(scanner.next());
                 }
-                new LineParser().parse(lines);
+                parser.parse(lines);
                 FacesContext.getCurrentInstance().addMessage(null,
                         new FacesMessage("Upload successfully ended!"));
             }

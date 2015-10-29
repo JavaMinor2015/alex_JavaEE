@@ -32,11 +32,11 @@
             <h:column>
                 <f:facet name="header">
                     Code
-                    <h:commandLink action="#{currencyRepository.sortByName('asc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('NAME','asc')}">
                         ASC
                     </h:commandLink>
                     |
-                    <h:commandLink action="#{currencyRepository.sortByName('desc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('NAME','desc')}">
                         DESC
                     </h:commandLink>
                 </f:facet>
@@ -48,11 +48,11 @@
             <h:column>
                 <f:facet name="header">
                     Rate in dollars
-                    <h:commandLink action="#{currencyRepository.sortByValueInDollars('asc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('VALUE_IN_DOLLARS','asc')}">
                         ASC
                     </h:commandLink>
                     |
-                    <h:commandLink action="#{currencyRepository.sortByValueInDollars('desc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('VALUE_IN_DOLLARS','desc')}">
                         DESC
                     </h:commandLink>
                 </f:facet>
@@ -64,11 +64,11 @@
             <h:column>
                 <f:facet name="header">
                     This in #{calculator.fromCurrency}
-                    <h:commandLink action="#{currencyRepository.sortByValue('asc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('VALUE','asc')}">
                         ASC
                     </h:commandLink>
                     |
-                    <h:commandLink action="#{currencyRepository.sortByValue('desc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('VALUE','desc')}">
                         DESC
                     </h:commandLink></f:facet>
                 <!--<h:inputText value="#{c.value}"-->
@@ -78,11 +78,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">#{calculator.fromCurrency} in this
-                    <h:commandLink action="#{currencyRepository.sortByInverseValue('asc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('INVERSE_VALUE','asc')}">
                         ASC
                     </h:commandLink>
                     |
-                    <h:commandLink action="#{currencyRepository.sortByInverseValue('desc')}">
+                    <h:commandLink action="#{currencyRepository.sortBy('INVERSE_VALUE','desc')}">
                         DESC
                     </h:commandLink></f:facet>
                 <!--<h:inputText value="#{c.inverseValue}"-->
