@@ -12,17 +12,17 @@ import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
  * Created by alex on 11/2/15.
  */
-@Named("oldNumericalCalculator")
+@Named("numericalCalculator")
 @SessionScoped
 @Getter
 @Setter
-public class MyFancyShmancyCalculatorService implements Serializable {
+public class MyFancierShmancierCalculatorService implements Serializable {
 
     @EJB
     Command command;
@@ -37,50 +37,47 @@ public class MyFancyShmancyCalculatorService implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private List<Command> issuedCommands = new ArrayList<>();
+    private Deque<Command> commands = new ArrayDeque<>();
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private int commandPosition = 0;
+    private Deque<Command> redoCommands = new ArrayDeque<>();
 
     private String[] operators = new String[]{"+", "-", "*", "/"};
 
     public void calculate() throws NamingException {
         // cut off list of undo/redo
-        if(commandPosition > 1) {
-            issuedCommands = issuedCommands.subList(0, commandPosition);
-            canRedo = false;
-        }
+        redoCommands.clear();
+        canRedo = false;
+
         command = InitialContext.doLookup("java:module/CalculatorCommand");
         command.initialize(calculator, operator.toCharArray()[0], value);
         command.execute();
-        issuedCommands.add(command);
-        commandPosition++;
+        commands.push(command);
         state = calculator.getCalculatorState();
     }
 
     public void redo(int levels) {
-        while(levels > 0){
-            if(commandPosition < issuedCommands.size()){
-                issuedCommands.get(commandPosition++).execute();
-            }
+        while (levels > 0) {
+            Command c = redoCommands.pop();
+            c.execute();
+            commands.push(c);
             levels--;
         }
         state = calculator.getCalculatorState();
-        if(commandPosition == issuedCommands.size()) {
+        if (redoCommands.isEmpty()) {
             canRedo = false;
         }
     }
 
     public void undo(int levels) {
-        while(levels > 0){
-            if(commandPosition > 0){
+        if (!commands.isEmpty()) {
+            while (levels > 0) {
                 canRedo = true;
-                issuedCommands.get(--commandPosition).undo();
+                Command c = commands.pop();
+                c.undo();
+                redoCommands.push(c);
+                levels--;
             }
-            levels--;
         }
         state = calculator.getCalculatorState();
     }
-
 }
