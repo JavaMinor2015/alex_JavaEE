@@ -40,12 +40,12 @@ public class TemperatureBean implements Temperature {
         FAHRENHEIT {
             @Override
             public double toCelsius(double amount) {
-                return (5 / 9) * (amount - 32);
+                return (amount - 32) / 1.8;
             }
 
             @Override
             public double fromCelsius(double amount) {
-                return (9 / 5) * (amount + 32);
+                return (1.8 * amount) + 32;
             }
         },
         KELVIN {
